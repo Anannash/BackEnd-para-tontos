@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ejemplo de aplicación en frontend</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+#response {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+</style>
+</head>
+<body>
+<h1>Ejemplo de aplicación en frontend</h1>
+<label for="service1-url">Dirección del primer microservicio:</label><br>
+<input type="text" id="service1-url" value="http://localhost:3000/api/" style="width: 100%;"><br><br>
+<label for="service2-url">Dirección del segundo microservicio:</label><br>
+<input type="text" id="service2-url" value="http://localhost:8000/api/" style="width: 100%;"><br><br>
+<button id="test-service1">Probar primer microservicio</button>
+<button id="test-service2">Probar segundo microservicio</button>
+<div id="response">
+<h3>Respuesta HTTP (Response):</h3>
+<pre id="output"></pre>
+</div>
+<script>
+async function callAPI(url) {
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+    } catch (error) {
+        document.getElementById('output').textContent = 'Error: ' + error;
+    }
+}
+
+document.getElementById('test-service1').addEventListener('click', function() {
+    const url = document.getElementById('service1-url').value;
+    callAPI(url);
+});
+
+document.getElementById('test-service2').addEventListener('click', function() {
+    const url = document.getElementById('service2-url').value;
+    callAPI(url);
+});
+</script>
+</body>
+</html>
